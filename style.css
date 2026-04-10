@@ -571,9 +571,9 @@ button {
   position: absolute;
   left: clamp(0px, 2vw, 16px);
   bottom: 6px;
-  width: 92px;
-  padding: 8px;
-  border-radius: 18px;
+  width: 74px;
+  padding: 6px;
+  border-radius: 16px;
   background: rgba(255, 250, 242, 0.94);
   border: 1px solid rgba(29, 22, 15, 0.08);
   box-shadow: 0 14px 26px rgba(29, 22, 15, 0.1);
@@ -585,18 +585,18 @@ button {
 .result-qr-image {
   width: 100%;
   display: block;
-  border-radius: 10px;
+  border-radius: 8px;
   background: #fff;
 }
 
 .result-qr-caption {
   display: block;
-  margin-top: 6px;
+  margin-top: 4px;
   text-align: center;
   color: var(--ink);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
 }
 
 .result-card::before {
@@ -781,7 +781,7 @@ button {
   }
 
   .result-qr-float {
-    width: 80px;
+    width: 66px;
     left: -2px;
     bottom: 2px;
   }
