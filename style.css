@@ -481,7 +481,7 @@ button {
   position: relative;
 }
 
-.result-hero img {
+.result-avatar-image {
   width: min(220px, 58vw);
   height: auto;
   filter: drop-shadow(0 20px 28px rgba(29, 22, 15, 0.12));
@@ -584,6 +584,8 @@ button {
 
 .result-qr-image {
   width: 100%;
+  max-width: 100%;
+  height: auto;
   display: block;
   border-radius: 4px;
   background: #fff;
