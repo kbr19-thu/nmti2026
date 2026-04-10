@@ -567,6 +567,38 @@ button {
   background: #5b6ee1;
 }
 
+.result-qr-float {
+  position: absolute;
+  left: clamp(0px, 2vw, 16px);
+  bottom: 6px;
+  width: 92px;
+  padding: 8px;
+  border-radius: 18px;
+  background: rgba(255, 250, 242, 0.94);
+  border: 1px solid rgba(29, 22, 15, 0.08);
+  box-shadow: 0 14px 26px rgba(29, 22, 15, 0.1);
+  backdrop-filter: blur(10px);
+  transform: rotate(-5deg);
+  z-index: 3;
+}
+
+.result-qr-image {
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.result-qr-caption {
+  display: block;
+  margin-top: 6px;
+  text-align: center;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
 .result-card::before {
   content: "";
   position: absolute;
@@ -657,32 +689,6 @@ button {
   gap: 14px;
 }
 
-.qr-panel {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 16px;
-  align-items: center;
-}
-
-.qr-image {
-  width: 120px;
-  height: 120px;
-  border-radius: 18px;
-  background: #fff;
-  padding: 10px;
-  border: 1px solid rgba(29, 22, 15, 0.08);
-  box-shadow: 0 10px 20px rgba(29, 22, 15, 0.06);
-}
-
-.qr-copy h3 {
-  margin: 0 0 8px;
-}
-
-.qr-copy p {
-  margin: 0;
-  word-break: break-word;
-}
-
 .score-row {
   display: grid;
   grid-template-columns: 110px 1fr 42px;
@@ -762,12 +768,6 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .qr-panel {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
-  }
-
   .result-hero {
     min-height: 222px;
   }
@@ -778,6 +778,12 @@ button {
     min-width: 54px;
     height: 54px;
     font-size: 18px;
+  }
+
+  .result-qr-float {
+    width: 80px;
+    left: -2px;
+    bottom: 2px;
   }
 
   .result-footerline {
