@@ -18,12 +18,14 @@ const ui = {
       "MBTI 先放一边，NMTI 来了。先看看你在办公室到底是卷王、演王、背锅侠，还是精神股东。",
     metrics: {
       questionsLabel: "题量",
-      questionsValue: "24 题",
+      questionsValue: "12 题 / 24 题",
       timeLabel: "耗时",
-      timeValue: "约 3 分钟",
+      timeValue: "约 90 秒 / 3 分钟",
       toneLabel: "风格",
       toneValue: "嘴毒但友好",
     },
+    shortMode: "12 题极速版",
+    fullMode: "24 题完整版",
     start: "开始测试",
     preview: "我想先看结果风格",
     disclaimer: "仅供娱乐，不适用于招聘、绩效、相亲、分手、升职、裁员和人生审判。",
@@ -65,12 +67,14 @@ const ui = {
       "What the fuck! MBTI can sit this one out. WTFI is here. Find out whether you are the office warlord, the blame tank, the cubicle ghost, or the emotional shareholder.",
     metrics: {
       questionsLabel: "Length",
-      questionsValue: "24 prompts",
+      questionsValue: "12 or 24 prompts",
       timeLabel: "Time",
-      timeValue: "About 3 min",
+      timeValue: "About 90 sec / 3 min",
       toneLabel: "Tone",
       toneValue: "Mean, but affectionate",
     },
+    shortMode: "12-Question Sprint",
+    fullMode: "24-Question Full Test",
     start: "Start Test",
     preview: "Show Me Sample Result",
     disclaimer: "For fun only. Not valid for hiring, performance reviews, breakups, promotions, layoffs, or destiny.",
@@ -608,6 +612,11 @@ const questions = [
   },
 ];
 
+const questionSets = {
+  short: [0, 1, 2, 4, 6, 7, 9, 12, 15, 18, 19, 23],
+  full: questions.map((_, index) => index),
+};
+
 const archetypes = [
   {
     code: "BOSS",
@@ -1036,6 +1045,7 @@ const variantVisuals = {
 const state = {
   index: 0,
   answers: Array(questions.length).fill(null),
+  mode: "short",
   result: null,
   lang: localStorage.getItem("nmti-lang") || "zh",
 };
@@ -1049,6 +1059,8 @@ const screens = {
 const els = {
   langZh: document.querySelector("#lang-zh"),
   langEn: document.querySelector("#lang-en"),
+  modeShort: document.querySelector("#mode-short"),
+  modeFull: document.querySelector("#mode-full"),
   heroEyebrow: document.querySelector("#hero-eyebrow"),
   heroTitle: document.querySelector("#hero-title"),
   heroCopy: document.querySelector("#hero-copy"),
@@ -1104,6 +1116,18 @@ function currentUi() {
   return ui[state.lang];
 }
 
+function activeQuestionIndexes() {
+  return questionSets[state.mode];
+}
+
+function activeQuestionsCount() {
+  return activeQuestionIndexes().length;
+}
+
+function activeQuestion() {
+  return questions[activeQuestionIndexes()[state.index]];
+}
+
 function setHeadText() {
   const metaDescription = document.querySelector('meta[name="description"]');
   const ogTitle = document.querySelector('meta[property="og:title"]');
@@ -1129,6 +1153,10 @@ function renderStaticUi() {
   els.metricTimeValue.textContent = data.metrics.timeValue;
   els.metricToneLabel.textContent = data.metrics.toneLabel;
   els.metricToneValue.textContent = data.metrics.toneValue;
+  els.modeShort.textContent = data.shortMode;
+  els.modeFull.textContent = data.fullMode;
+  els.modeShort.classList.toggle("active", state.mode === "short");
+  els.modeFull.classList.toggle("active", state.mode === "full");
   els.startButton.textContent = data.start;
   els.jumpResultButton.textContent = data.preview;
   els.disclaimerText.textContent = data.disclaimer;
@@ -1161,14 +1189,16 @@ function showScreen(name) {
 }
 
 function renderQuestion() {
-  const question = questions[state.index];
-  const answeredIndex = state.answers[state.index];
-  const progress = ((state.index + 1) / questions.length) * 100;
+  const questionIndex = activeQuestionIndexes()[state.index];
+  const question = questions[questionIndex];
+  const answeredIndex = state.answers[questionIndex];
+  const total = activeQuestionsCount();
+  const progress = ((state.index + 1) / total) * 100;
   const data = currentUi();
 
   els.questionTag.textContent = t(question.tag);
   els.questionText.textContent = t(question.text);
-  els.progressLabel.textContent = data.progress(state.index + 1, questions.length);
+  els.progressLabel.textContent = data.progress(state.index + 1, total);
   els.progressPercent.textContent = data.questionPercent(Math.round(progress));
   els.progressFill.style.width = `${progress}%`;
 
@@ -1182,14 +1212,14 @@ function renderQuestion() {
     }
     button.innerHTML = `<strong>${t(option.title)}</strong><span>${t(option.note)}</span>`;
     button.addEventListener("click", () => {
-      state.answers[state.index] = index;
+      state.answers[questionIndex] = index;
       renderQuestion();
     });
     els.optionList.appendChild(button);
   });
 
   els.prevButton.disabled = state.index === 0;
-  els.nextButton.textContent = state.index === questions.length - 1 ? data.submit : data.next;
+  els.nextButton.textContent = state.index === total - 1 ? data.submit : data.next;
 }
 
 function clampScore(value) {
@@ -1200,6 +1230,9 @@ function computeScores() {
   const raw = { drive: 0, social: 0, risk: 0, emotion: 0, control: 0 };
 
   questions.forEach((question, questionIndex) => {
+    if (!activeQuestionIndexes().includes(questionIndex)) {
+      return;
+    }
     const chosen = state.answers[questionIndex];
     if (chosen === null) {
       return;
@@ -1297,7 +1330,7 @@ function renderResult() {
 }
 
 function allAnswered() {
-  return state.answers.every((item) => item !== null);
+  return activeQuestionIndexes().every((index) => state.answers[index] !== null);
 }
 
 function startQuiz() {
@@ -1312,6 +1345,14 @@ function resetQuiz() {
   state.answers = Array(questions.length).fill(null);
   state.result = null;
   startQuiz();
+}
+
+function setMode(mode) {
+  state.mode = mode;
+  state.index = 0;
+  state.answers = Array(questions.length).fill(null);
+  state.result = null;
+  renderStaticUi();
 }
 
 function copyShareText() {
@@ -1348,9 +1389,14 @@ function setLanguage(lang) {
 
 els.langZh.addEventListener("click", () => setLanguage("zh"));
 els.langEn.addEventListener("click", () => setLanguage("en"));
+els.modeShort.addEventListener("click", () => setMode("short"));
+els.modeFull.addEventListener("click", () => setMode("full"));
 els.startButton.addEventListener("click", startQuiz);
 els.jumpResultButton.addEventListener("click", () => {
-  state.answers = questions.map((question) => (question.options[0] ? 0 : null));
+  state.answers = Array(questions.length).fill(null);
+  activeQuestionIndexes().forEach((index) => {
+    state.answers[index] = questions[index].options[0] ? 0 : null;
+  });
   renderResult();
   showScreen("result");
 });
@@ -1360,12 +1406,14 @@ els.prevButton.addEventListener("click", () => {
   renderQuestion();
 });
 els.nextButton.addEventListener("click", () => {
-  if (state.answers[state.index] === null) {
+  const currentQuestionIndex = activeQuestionIndexes()[state.index];
+
+  if (state.answers[currentQuestionIndex] === null) {
     window.alert(currentUi().chooseFirst);
     return;
   }
 
-  if (state.index === questions.length - 1) {
+  if (state.index === activeQuestionsCount() - 1) {
     if (!allAnswered()) {
       window.alert(currentUi().finishAll);
       return;

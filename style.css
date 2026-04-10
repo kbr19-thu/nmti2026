@@ -159,6 +159,32 @@ h1 {
   margin-top: 28px;
 }
 
+.mode-switch {
+  display: inline-flex;
+  gap: 6px;
+  margin-top: 18px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(255, 252, 247, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 24px rgba(29, 22, 15, 0.06);
+}
+
+.mode-button {
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.mode-button.active {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 4px 10px rgba(29, 22, 15, 0.08);
+}
+
 .avatar-showcase {
   display: flex;
   gap: 10px;
@@ -578,6 +604,14 @@ button {
 
   .avatar-showcase {
     gap: 8px;
+  }
+
+  .mode-switch {
+    display: flex;
+  }
+
+  .mode-button {
+    flex: 1;
   }
 
   .avatar-showcase img {
