@@ -775,6 +775,10 @@ button {
   z-index: 2;
 }
 
+.result-avatar-image.airdropping {
+  animation: result-airdrop 820ms cubic-bezier(0.2, 0.9, 0.24, 1.18);
+}
+
 .result-aura {
   position: absolute;
   width: min(270px, 72vw);
@@ -788,6 +792,10 @@ button {
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.66),
     0 18px 32px rgba(29, 22, 15, 0.08);
+}
+
+.result-aura.airdropping {
+  animation: result-airdrop-aura 820ms ease-out;
 }
 
 .result-aura::before,
@@ -827,6 +835,10 @@ button {
   z-index: 3;
 }
 
+.result-emblem.airdropping {
+  animation: result-airdrop-emblem 820ms ease-out;
+}
+
 .result-emblem[data-style="badge"] {
   border-radius: 999px;
 }
@@ -851,6 +863,54 @@ button {
 
 .result-emblem[data-style="royal"] {
   background: #5b6ee1;
+}
+
+@keyframes result-airdrop {
+  0% {
+    transform: translateY(-150px) scale(0.68) rotate(-12deg);
+    opacity: 0;
+  }
+  54% {
+    transform: translateY(14px) scale(1.06) rotate(4deg);
+    opacity: 1;
+  }
+  74% {
+    transform: translateY(-6px) scale(0.98) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes result-airdrop-aura {
+  0% {
+    transform: scale(0.72);
+    opacity: 0;
+  }
+  54% {
+    transform: scale(1.12);
+    opacity: 0.92;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes result-airdrop-emblem {
+  0% {
+    transform: translateY(-90px) rotate(-18deg) scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(6px) rotate(12deg) scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) rotate(8deg) scale(1);
+    opacity: 1;
+  }
 }
 
 .result-qr-float {

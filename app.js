@@ -1370,6 +1370,20 @@ function triggerPlazaDropAnimation() {
   }, 900);
 }
 
+function triggerResultAirdropAnimation() {
+  [els.resultAvatar, els.resultAura, els.resultEmblem].forEach((element) => {
+    element.classList.remove("airdropping");
+    void element.offsetWidth;
+    element.classList.add("airdropping");
+  });
+  window.clearTimeout(triggerResultAirdropAnimation.timer);
+  triggerResultAirdropAnimation.timer = window.setTimeout(() => {
+    [els.resultAvatar, els.resultAura, els.resultEmblem].forEach((element) => {
+      element.classList.remove("airdropping");
+    });
+  }, 860);
+}
+
 function isPlazaVisible() {
   if (screens.hero.classList.contains("hidden")) {
     return false;
@@ -1567,6 +1581,7 @@ function renderResult() {
     els.scoreList.appendChild(row);
   });
 
+  triggerResultAirdropAnimation();
   renderPlaza();
   state.plazaDropPending = true;
   maybeTriggerPlazaDropAnimation();
