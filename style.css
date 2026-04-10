@@ -571,7 +571,7 @@ button {
   position: absolute;
   left: clamp(0px, 2vw, 16px);
   bottom: 6px;
-  width: 42px;
+  width: 84px;
   padding: 3px;
   border-radius: 9px;
   background: rgba(255, 250, 242, 0.94);
@@ -789,7 +789,7 @@ button {
 
   .result-qr-float {
     display: block;
-    width: 10px;
+    width: 40px;
     left: auto;
     right: 8px;
     bottom: 8px;
