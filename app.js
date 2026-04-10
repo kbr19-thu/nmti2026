@@ -16,6 +16,15 @@ const ui = {
     heroTitle: "NMTI 牛马人格测试",
     heroCopy:
       "MBTI 先放一边，NMTI 来了。先看看你在办公室到底是卷王、演王、背锅侠，还是精神股东。",
+    plazaEyebrow: "NMTI PLAZA / OFFICE CREATURE SQUARE",
+    plazaTitle: "下拉，看看今天的牛马广场",
+    plazaCopy:
+      "这里是假装实时运转的办公室平行宇宙。有人在控场，有人在甩锅，有人在摸鱼，有人正在精神参股。",
+    plazaDropKicker: "你的结果会空降到这里",
+    plazaDropTitleIdle: "你的牛马分身待命中",
+    plazaDropNoteIdle: "测完以后，它会被丢进这堆小人里一起上班。",
+    plazaDropTitleReady: (title) => `${title} 已混入广场`,
+    plazaDropNoteReady: "现在你的分身已经和别的牛马一起开始假装忙碌了。",
     metrics: {
       questionsLabel: "题量",
       questionsValue: "12 题 / 24 题",
@@ -69,6 +78,15 @@ const ui = {
     heroTitle: "WTFI Office Type Test",
     heroCopy:
       "What the fuck! MBTI can sit this one out. WTFI is here. Find out whether you are the office warlord, the blame tank, the cubicle ghost, or the emotional shareholder.",
+    plazaEyebrow: "WTFI PLAZA / OFFICE CREATURE SQUARE",
+    plazaTitle: "Scroll Down Into The Office Creature Plaza",
+    plazaCopy:
+      "This is a fake live-feed from a parallel office dimension. Some creatures are controlling the room, some are tanking blame, some are quietly slacking, and some are spiritually overinvested.",
+    plazaDropKicker: "Your result will be dropped here",
+    plazaDropTitleIdle: "Your office creature is standing by",
+    plazaDropNoteIdle: "Finish the test and we will throw your worksona straight into the crowd.",
+    plazaDropTitleReady: (title) => `${title} has entered the plaza`,
+    plazaDropNoteReady: "Your worksona is now pretending to be productive with the rest of them.",
     metrics: {
       questionsLabel: "Length",
       questionsValue: "12 or 24 prompts",
@@ -114,6 +132,52 @@ const ui = {
     shareText: ({ title, code, match, summary, url }) =>
       `My WTFI office type is "${title} ${code}" with a ${match}% match.\n${summary}\nTry it here: ${url}`,
   },
+};
+
+const plazaPositions = [
+  { left: "5%", top: "11%", lane: "back", delay: "-0.6s", rotate: "-5deg" },
+  { left: "22%", top: "6%", lane: "back", delay: "-1.8s", rotate: "4deg" },
+  { left: "74%", top: "9%", lane: "back", delay: "-1.2s", rotate: "6deg" },
+  { left: "84%", top: "28%", lane: "back", delay: "-2.1s", rotate: "-4deg" },
+  { left: "7%", top: "37%", lane: "front", delay: "-0.9s", rotate: "5deg" },
+  { left: "21%", top: "50%", lane: "front", delay: "-2.3s", rotate: "-7deg" },
+  { left: "76%", top: "48%", lane: "front", delay: "-1.4s", rotate: "4deg" },
+  { left: "64%", top: "67%", lane: "front", delay: "-3.1s", rotate: "-6deg" },
+  { left: "10%", top: "74%", lane: "back", delay: "-1.6s", rotate: "6deg" },
+  { left: "33%", top: "79%", lane: "back", delay: "-2.8s", rotate: "-3deg" },
+  { left: "83%", top: "78%", lane: "back", delay: "-0.4s", rotate: "3deg" },
+  { left: "52%", top: "18%", lane: "front", delay: "-1.1s", rotate: "-4deg" },
+];
+
+const plazaBubblePool = {
+  zh: [
+    "先对个口径",
+    "这个锅谁的",
+    "我先潜一下",
+    "今晚还能改",
+    "先开个表",
+    "群里回个1",
+    "这会能散吗",
+    "让我再想想",
+    "我精神参股",
+    "先别发版本",
+    "这个我来顶",
+    "已读但存活",
+  ],
+  en: [
+    "sync first",
+    "who owns this",
+    "I am lurking",
+    "we can still patch it",
+    "make a sheet",
+    "reply with 1",
+    "can this meeting die",
+    "give me a minute",
+    "spiritually invested",
+    "do not ship yet",
+    "I can tank this",
+    "seen and surviving",
+  ],
 };
 
 const questions = [
@@ -1079,6 +1143,16 @@ const els = {
   metricToneLabel: document.querySelector("#metric-tone-label"),
   metricToneValue: document.querySelector("#metric-tone-value"),
   disclaimerText: document.querySelector("#disclaimer-text"),
+  plazaScreen: document.querySelector("#plaza-screen"),
+  plazaEyebrow: document.querySelector("#plaza-eyebrow"),
+  plazaTitle: document.querySelector("#plaza-title"),
+  plazaCopy: document.querySelector("#plaza-copy"),
+  plazaCrowd: document.querySelector("#plaza-crowd"),
+  plazaDropKicker: document.querySelector("#plaza-drop-kicker"),
+  plazaDropAura: document.querySelector("#plaza-drop-aura"),
+  plazaDropAvatar: document.querySelector("#plaza-drop-avatar"),
+  plazaDropTitle: document.querySelector("#plaza-drop-title"),
+  plazaDropNote: document.querySelector("#plaza-drop-note"),
   startButton: document.querySelector("#start-button"),
   jumpResultButton: document.querySelector("#jump-result-button"),
   backHomeButton: document.querySelector("#back-home-button"),
@@ -1157,6 +1231,10 @@ function renderStaticUi() {
   els.heroEyebrow.textContent = data.heroEyebrow;
   els.heroTitle.textContent = data.heroTitle;
   els.heroCopy.textContent = data.heroCopy;
+  els.plazaEyebrow.textContent = data.plazaEyebrow;
+  els.plazaTitle.textContent = data.plazaTitle;
+  els.plazaCopy.textContent = data.plazaCopy;
+  els.plazaDropKicker.textContent = data.plazaDropKicker;
   els.metricQuestionsLabel.textContent = data.metrics.questionsLabel;
   els.metricQuestionsValue.textContent = data.metrics.questionsValue;
   els.metricTimeLabel.textContent = data.metrics.timeLabel;
@@ -1186,6 +1264,7 @@ function renderStaticUi() {
   els.resultLinkChip.textContent = data.qrChipText;
   els.langZh.classList.toggle("active", state.lang === "zh");
   els.langEn.classList.toggle("active", state.lang === "en");
+  renderPlaza();
 
   if (state.result) {
     renderResult();
@@ -1198,6 +1277,77 @@ function showScreen(name) {
   Object.entries(screens).forEach(([key, element]) => {
     element.classList.toggle("hidden", key !== name);
   });
+  els.plazaScreen.classList.toggle("hidden", name !== "hero");
+}
+
+function plazaMembers() {
+  return [
+    archetypes[0],
+    archetypes[2],
+    archetypes[6],
+    archetypes[3],
+    archetypes[7],
+    archetypes[1],
+    archetypes[4],
+    archetypes[5],
+    archetypes[3],
+    archetypes[2],
+    archetypes[1],
+    archetypes[6],
+  ];
+}
+
+function renderPlaza() {
+  const crowd = plazaMembers();
+  const bubbles = plazaBubblePool[state.lang];
+
+  els.plazaCrowd.innerHTML = "";
+  crowd.forEach((member, index) => {
+    const spot = plazaPositions[index % plazaPositions.length];
+    const bubble = bubbles[index % bubbles.length];
+    const item = document.createElement("div");
+    item.className = "plaza-member";
+    item.dataset.lane = spot.lane;
+    item.style.left = spot.left;
+    item.style.top = spot.top;
+    item.style.animationDelay = spot.delay;
+    item.style.setProperty("--member-accent", member.accent);
+    item.style.rotate = spot.rotate;
+    if (state.result && state.result.avatar === member.avatar) {
+      item.classList.add("current");
+    }
+
+    item.innerHTML = `
+      <div class="plaza-member-avatar-wrap">
+        <div class="plaza-member-aura" style="background: radial-gradient(circle, color-mix(in srgb, ${member.accent} 30%, white), transparent 68%);"></div>
+        <img class="plaza-member-avatar" src="${member.avatar}" alt="${t(member.title)}">
+        <span class="plaza-member-bubble">${bubble}</span>
+      </div>
+      <span class="plaza-member-label">${t(member.title)}</span>
+    `;
+
+    els.plazaCrowd.appendChild(item);
+  });
+
+  if (state.result) {
+    els.plazaDropAvatar.src = state.result.avatar;
+    els.plazaDropAvatar.alt = `${t(state.result.title)} plaza avatar`;
+    els.plazaDropTitle.textContent = currentUi().plazaDropTitleReady(t(state.result.title));
+    els.plazaDropNote.textContent = currentUi().plazaDropNoteReady;
+    els.plazaDropAura.style.background = `
+      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.94), transparent 26%),
+      linear-gradient(135deg, color-mix(in srgb, ${state.result.accent} 28%, white), rgba(243, 179, 61, 0.14))
+    `;
+  } else {
+    els.plazaDropAvatar.src = archetypes[0].avatar;
+    els.plazaDropAvatar.alt = state.lang === "zh" ? "广场主角" : "Plaza lead";
+    els.plazaDropTitle.textContent = currentUi().plazaDropTitleIdle;
+    els.plazaDropNote.textContent = currentUi().plazaDropNoteIdle;
+    els.plazaDropAura.style.background = `
+      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.94), transparent 26%),
+      linear-gradient(135deg, rgba(91, 110, 225, 0.22), rgba(243, 179, 61, 0.14))
+    `;
+  }
 }
 
 function optionBadge(option, index) {
@@ -1378,6 +1528,8 @@ function renderResult() {
     `;
     els.scoreList.appendChild(row);
   });
+
+  renderPlaza();
 }
 
 function allAnswered() {
@@ -1395,6 +1547,7 @@ function resetQuiz() {
   state.index = 0;
   state.answers = Array(questions.length).fill(null);
   state.result = null;
+  renderPlaza();
   startQuiz();
 }
 

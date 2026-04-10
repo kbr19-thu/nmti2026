@@ -263,6 +263,251 @@ button {
   display: none;
 }
 
+.plaza {
+  margin-top: 18px;
+  padding: 28px 24px 30px;
+  background: rgba(255, 250, 242, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+}
+
+.plaza-copy h2 {
+  margin: 8px 0 10px;
+  font-size: clamp(34px, 6vw, 58px);
+  line-height: 0.96;
+}
+
+.plaza-stage {
+  position: relative;
+  margin-top: 24px;
+  min-height: 560px;
+  overflow: hidden;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(243, 179, 61, 0.2), transparent 26%),
+    radial-gradient(circle at 85% 15%, rgba(91, 110, 225, 0.18), transparent 24%),
+    linear-gradient(180deg, rgba(255, 252, 247, 0.96), rgba(241, 232, 218, 0.86));
+  border: 1px solid rgba(29, 22, 15, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+.plaza-gridlines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(29, 22, 15, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29, 22, 15, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.88));
+}
+
+.plaza-crowd {
+  position: absolute;
+  inset: 0;
+}
+
+.plaza-member {
+  position: absolute;
+  width: 112px;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  animation: plaza-bob 3.8s ease-in-out infinite;
+}
+
+.plaza-member[data-lane="back"] {
+  scale: 0.84;
+  opacity: 0.78;
+}
+
+.plaza-member[data-lane="front"] {
+  z-index: 2;
+}
+
+.plaza-member-avatar-wrap {
+  position: relative;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.plaza-member-aura {
+  position: absolute;
+  width: 90px;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  opacity: 0.62;
+  filter: blur(1px);
+}
+
+.plaza-member-avatar {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(29, 22, 15, 0.08);
+  box-shadow: 0 16px 30px rgba(29, 22, 15, 0.09);
+  padding: 8px;
+  z-index: 1;
+}
+
+.plaza-member-label {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 250, 242, 0.94);
+  border: 1px solid rgba(29, 22, 15, 0.08);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 10px 18px rgba(29, 22, 15, 0.06);
+}
+
+.plaza-member-bubble {
+  position: absolute;
+  top: -10px;
+  left: 72%;
+  min-width: 76px;
+  max-width: 128px;
+  padding: 7px 10px;
+  border-radius: 16px 16px 16px 4px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(29, 22, 15, 0.08);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.25;
+  box-shadow: 0 12px 24px rgba(29, 22, 15, 0.08);
+  transform-origin: left bottom;
+  animation: plaza-bubble 3.2s ease-in-out infinite;
+}
+
+.plaza-member-bubble::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  bottom: -8px;
+  width: 14px;
+  height: 14px;
+  background: inherit;
+  border-right: 1px solid rgba(29, 22, 15, 0.08);
+  border-bottom: 1px solid rgba(29, 22, 15, 0.08);
+  transform: rotate(36deg);
+}
+
+.plaza-member.current .plaza-member-avatar {
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--member-accent, #db5b2b) 18%, white),
+    0 20px 34px rgba(29, 22, 15, 0.13);
+}
+
+.plaza-member.current .plaza-member-label {
+  background: color-mix(in srgb, var(--member-accent, #db5b2b) 16%, white);
+  color: var(--member-accent, #db5b2b);
+}
+
+.plaza-dropzone {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(280px, calc(100% - 32px));
+  padding: 18px 18px 16px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  border-radius: 28px;
+  background: rgba(255, 250, 242, 0.88);
+  border: 1px solid rgba(29, 22, 15, 0.08);
+  box-shadow: 0 24px 50px rgba(29, 22, 15, 0.08);
+  z-index: 3;
+}
+
+.plaza-drop-kicker,
+.plaza-drop-note {
+  color: var(--muted);
+  text-align: center;
+}
+
+.plaza-drop-kicker {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.plaza-drop-card {
+  position: relative;
+  width: 164px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.plaza-drop-aura {
+  position: absolute;
+  inset: 8px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.94), transparent 26%),
+    linear-gradient(135deg, rgba(91, 110, 225, 0.22), rgba(243, 179, 61, 0.14));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 12px 30px rgba(29, 22, 15, 0.08);
+}
+
+.plaza-drop-avatar {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  padding: 10px;
+  border-radius: 34px;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(29, 22, 15, 0.08);
+  box-shadow: 0 18px 32px rgba(29, 22, 15, 0.1);
+  animation: plaza-drop-float 4s ease-in-out infinite;
+}
+
+.plaza-drop-title {
+  font-size: 20px;
+  text-align: center;
+}
+
+.plaza-drop-note {
+  max-width: 24ch;
+  line-height: 1.5;
+}
+
+@keyframes plaza-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes plaza-bubble {
+  0%, 100% {
+    transform: scale(0.96) rotate(-2deg);
+  }
+  50% {
+    transform: scale(1) rotate(1deg);
+  }
+}
+
+@keyframes plaza-drop-float {
+  0%, 100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
 .quiz,
 .result {
   padding: 22px;
@@ -772,6 +1017,58 @@ button {
 
   .result-grid {
     grid-template-columns: 1fr;
+  }
+
+  .plaza {
+    padding: 24px 16px 20px;
+  }
+
+  .plaza-stage {
+    min-height: 680px;
+  }
+
+  .plaza-member {
+    width: 84px;
+  }
+
+  .plaza-member-avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 22px;
+  }
+
+  .plaza-member-aura {
+    width: 70px;
+  }
+
+  .plaza-member-bubble {
+    min-width: 58px;
+    max-width: 90px;
+    padding: 6px 8px;
+    font-size: 10px;
+    left: 58%;
+  }
+
+  .plaza-member-label {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .plaza-dropzone {
+    width: min(230px, calc(100% - 20px));
+    top: auto;
+    bottom: 18px;
+    transform: translateX(-50%);
+  }
+
+  .plaza-drop-card {
+    width: 136px;
+  }
+
+  .plaza-drop-avatar {
+    width: 108px;
+    height: 108px;
+    border-radius: 28px;
   }
 
   .result-hero {
