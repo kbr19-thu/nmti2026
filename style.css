@@ -770,6 +770,7 @@ button {
 
   .result-hero {
     min-height: 222px;
+    padding-bottom: 28px;
   }
 
   .result-emblem {
@@ -783,8 +784,8 @@ button {
   .result-qr-float {
     width: 38px;
     left: auto;
-    right: 4px;
-    bottom: 6px;
+    right: 8px;
+    bottom: -8px;
     padding: 3px;
     border-radius: 10px;
     transform: rotate(0deg);
