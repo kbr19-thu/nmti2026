@@ -25,6 +25,13 @@ const ui = {
     plazaDropNoteIdle: "测完以后，它会被丢进这堆小人里一起上班。",
     plazaDropTitleReady: (title) => `${title} 已混入广场`,
     plazaDropNoteReady: "现在你的分身已经和别的牛马一起开始假装忙碌了。",
+    resultPlazaTitle: "你的牛马刚刚被丢进广场",
+    resultPlazaCopy: "这一刻开始，你的分身已经加入办公室平行宇宙，和别的牛马一起演、卷、背锅、潜水。",
+    resultPlazaDropKicker: "你的结果正在空降",
+    resultPlazaDropTitleIdle: "你的牛马分身正在落位",
+    resultPlazaDropNoteIdle: "它现在会直接出现在这页，不用先回首页。",
+    resultPlazaDropTitleReady: (title) => `${title} 已落地结果广场`,
+    resultPlazaDropNoteReady: "你现在看到的，就是它被扔进牛马堆里的现场。",
     metrics: {
       questionsLabel: "题量",
       questionsValue: "12 题 / 24 题",
@@ -87,6 +94,13 @@ const ui = {
     plazaDropNoteIdle: "Finish the test and we will throw your worksona straight into the crowd.",
     plazaDropTitleReady: (title) => `${title} has entered the plaza`,
     plazaDropNoteReady: "Your worksona is now pretending to be productive with the rest of them.",
+    resultPlazaTitle: "Your office creature just got dumped into the plaza",
+    resultPlazaCopy: "Your worksona has now joined the parallel office dimension, where everyone is performing, grinding, tanking blame, or lurking professionally.",
+    resultPlazaDropKicker: "Your result is dropping in now",
+    resultPlazaDropTitleIdle: "Your office creature is landing",
+    resultPlazaDropNoteIdle: "It now appears right here on the result page. No trip back home needed.",
+    resultPlazaDropTitleReady: (title) => `${title} has landed in the result plaza`,
+    resultPlazaDropNoteReady: "This is the exact moment your creature gets thrown into the crowd.",
     metrics: {
       questionsLabel: "Length",
       questionsValue: "12 or 24 prompts",
@@ -1155,6 +1169,16 @@ const els = {
   plazaDropAvatar: document.querySelector("#plaza-drop-avatar"),
   plazaDropTitle: document.querySelector("#plaza-drop-title"),
   plazaDropNote: document.querySelector("#plaza-drop-note"),
+  resultPlazaEyebrow: document.querySelector("#result-plaza-eyebrow"),
+  resultPlazaTitle: document.querySelector("#result-plaza-title"),
+  resultPlazaCopy: document.querySelector("#result-plaza-copy"),
+  resultPlazaCrowd: document.querySelector("#result-plaza-crowd"),
+  resultPlazaDropKicker: document.querySelector("#result-plaza-drop-kicker"),
+  resultPlazaDropCard: document.querySelector("#result-plaza-drop-card"),
+  resultPlazaDropAura: document.querySelector("#result-plaza-drop-aura"),
+  resultPlazaDropAvatar: document.querySelector("#result-plaza-drop-avatar"),
+  resultPlazaDropTitle: document.querySelector("#result-plaza-drop-title"),
+  resultPlazaDropNote: document.querySelector("#result-plaza-drop-note"),
   startButton: document.querySelector("#start-button"),
   jumpResultButton: document.querySelector("#jump-result-button"),
   backHomeButton: document.querySelector("#back-home-button"),
@@ -1237,6 +1261,10 @@ function renderStaticUi() {
   els.plazaTitle.textContent = data.plazaTitle;
   els.plazaCopy.textContent = data.plazaCopy;
   els.plazaDropKicker.textContent = data.plazaDropKicker;
+  els.resultPlazaEyebrow.textContent = data.plazaEyebrow;
+  els.resultPlazaTitle.textContent = data.resultPlazaTitle;
+  els.resultPlazaCopy.textContent = data.resultPlazaCopy;
+  els.resultPlazaDropKicker.textContent = data.resultPlazaDropKicker;
   els.metricQuestionsLabel.textContent = data.metrics.questionsLabel;
   els.metricQuestionsValue.textContent = data.metrics.questionsValue;
   els.metricTimeLabel.textContent = data.metrics.timeLabel;
@@ -1303,57 +1331,89 @@ function plazaMembers() {
   ];
 }
 
+function plazaContexts() {
+  return [
+    {
+      crowd: els.plazaCrowd,
+      dropAura: els.plazaDropAura,
+      dropAvatar: els.plazaDropAvatar,
+      dropTitle: els.plazaDropTitle,
+      dropNote: els.plazaDropNote,
+      dropCard: els.plazaDropCard,
+      titleIdle: currentUi().plazaDropTitleIdle,
+      noteIdle: currentUi().plazaDropNoteIdle,
+      titleReady: currentUi().plazaDropTitleReady,
+      noteReady: currentUi().plazaDropNoteReady,
+      idleAlt: state.lang === "zh" ? "广场主角" : "Plaza lead",
+    },
+    {
+      crowd: els.resultPlazaCrowd,
+      dropAura: els.resultPlazaDropAura,
+      dropAvatar: els.resultPlazaDropAvatar,
+      dropTitle: els.resultPlazaDropTitle,
+      dropNote: els.resultPlazaDropNote,
+      dropCard: els.resultPlazaDropCard,
+      titleIdle: currentUi().resultPlazaDropTitleIdle,
+      noteIdle: currentUi().resultPlazaDropNoteIdle,
+      titleReady: currentUi().resultPlazaDropTitleReady,
+      noteReady: currentUi().resultPlazaDropNoteReady,
+      idleAlt: state.lang === "zh" ? "结果页广场主角" : "Result plaza lead",
+    },
+  ];
+}
+
 function renderPlaza() {
   const crowd = plazaMembers();
   const bubbles = plazaBubblePool[state.lang];
+  plazaContexts().forEach((context) => {
+    context.crowd.innerHTML = "";
+    crowd.forEach((member, index) => {
+      const spot = plazaPositions[index % plazaPositions.length];
+      const bubble = bubbles[index % bubbles.length];
+      const item = document.createElement("div");
+      item.className = "plaza-member";
+      item.dataset.lane = spot.lane;
+      item.style.left = spot.left;
+      item.style.top = spot.top;
+      item.style.animationDelay = spot.delay;
+      item.style.setProperty("--member-accent", member.accent);
+      item.style.rotate = spot.rotate;
+      if (state.result && state.result.avatar === member.avatar) {
+        item.classList.add("current");
+      }
 
-  els.plazaCrowd.innerHTML = "";
-  crowd.forEach((member, index) => {
-    const spot = plazaPositions[index % plazaPositions.length];
-    const bubble = bubbles[index % bubbles.length];
-    const item = document.createElement("div");
-    item.className = "plaza-member";
-    item.dataset.lane = spot.lane;
-    item.style.left = spot.left;
-    item.style.top = spot.top;
-    item.style.animationDelay = spot.delay;
-    item.style.setProperty("--member-accent", member.accent);
-    item.style.rotate = spot.rotate;
-    if (state.result && state.result.avatar === member.avatar) {
-      item.classList.add("current");
+      item.innerHTML = `
+        <div class="plaza-member-avatar-wrap">
+          <div class="plaza-member-aura" style="background: radial-gradient(circle, color-mix(in srgb, ${member.accent} 30%, white), transparent 68%);"></div>
+          <img class="plaza-member-avatar" src="${member.avatar}" alt="${t(member.title)}">
+          <span class="plaza-member-bubble">${bubble}</span>
+        </div>
+        <span class="plaza-member-label">${t(member.title)}</span>
+      `;
+
+      context.crowd.appendChild(item);
+    });
+
+    if (state.result) {
+      context.dropAvatar.src = state.result.avatar;
+      context.dropAvatar.alt = `${t(state.result.title)} plaza avatar`;
+      context.dropTitle.textContent = context.titleReady(t(state.result.title));
+      context.dropNote.textContent = context.noteReady;
+      context.dropAura.style.background = `
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.94), transparent 26%),
+        linear-gradient(135deg, color-mix(in srgb, ${state.result.accent} 28%, white), rgba(243, 179, 61, 0.14))
+      `;
+    } else {
+      context.dropAvatar.src = archetypes[0].avatar;
+      context.dropAvatar.alt = context.idleAlt;
+      context.dropTitle.textContent = context.titleIdle;
+      context.dropNote.textContent = context.noteIdle;
+      context.dropAura.style.background = `
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.94), transparent 26%),
+        linear-gradient(135deg, rgba(91, 110, 225, 0.22), rgba(243, 179, 61, 0.14))
+      `;
     }
-
-    item.innerHTML = `
-      <div class="plaza-member-avatar-wrap">
-        <div class="plaza-member-aura" style="background: radial-gradient(circle, color-mix(in srgb, ${member.accent} 30%, white), transparent 68%);"></div>
-        <img class="plaza-member-avatar" src="${member.avatar}" alt="${t(member.title)}">
-        <span class="plaza-member-bubble">${bubble}</span>
-      </div>
-      <span class="plaza-member-label">${t(member.title)}</span>
-    `;
-
-    els.plazaCrowd.appendChild(item);
   });
-
-  if (state.result) {
-    els.plazaDropAvatar.src = state.result.avatar;
-    els.plazaDropAvatar.alt = `${t(state.result.title)} plaza avatar`;
-    els.plazaDropTitle.textContent = currentUi().plazaDropTitleReady(t(state.result.title));
-    els.plazaDropNote.textContent = currentUi().plazaDropNoteReady;
-    els.plazaDropAura.style.background = `
-      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.94), transparent 26%),
-      linear-gradient(135deg, color-mix(in srgb, ${state.result.accent} 28%, white), rgba(243, 179, 61, 0.14))
-    `;
-  } else {
-    els.plazaDropAvatar.src = archetypes[0].avatar;
-    els.plazaDropAvatar.alt = state.lang === "zh" ? "广场主角" : "Plaza lead";
-    els.plazaDropTitle.textContent = currentUi().plazaDropTitleIdle;
-    els.plazaDropNote.textContent = currentUi().plazaDropNoteIdle;
-    els.plazaDropAura.style.background = `
-      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.94), transparent 26%),
-      linear-gradient(135deg, rgba(91, 110, 225, 0.22), rgba(243, 179, 61, 0.14))
-    `;
-  }
 }
 
 function triggerPlazaDropAnimation() {
@@ -1361,12 +1421,16 @@ function triggerPlazaDropAnimation() {
     return;
   }
   state.plazaDropPending = false;
-  els.plazaDropCard.classList.remove("dropping");
-  void els.plazaDropCard.offsetWidth;
-  els.plazaDropCard.classList.add("dropping");
+  [els.plazaDropCard, els.resultPlazaDropCard].forEach((card) => {
+    card.classList.remove("dropping");
+    void card.offsetWidth;
+    card.classList.add("dropping");
+  });
   window.clearTimeout(triggerPlazaDropAnimation.timer);
   triggerPlazaDropAnimation.timer = window.setTimeout(() => {
-    els.plazaDropCard.classList.remove("dropping");
+    [els.plazaDropCard, els.resultPlazaDropCard].forEach((card) => {
+      card.classList.remove("dropping");
+    });
   }, 900);
 }
 
