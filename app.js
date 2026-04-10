@@ -42,6 +42,8 @@ const ui = {
     matchRate: (value) => `匹配度 ${value}%`,
     noteHeading: "友情提示",
     noteText: "结果只是你当下的社畜切面，不是永久人格。睡饱一点、发完奖金、换个老板，结果都可能重算。",
+    qrHeading: "正式链接",
+    qrText: "扫码或打开 https://fun.tujipath.com/",
     retryTop: "重新测试",
     backTop: "回首页",
     retry: "再测一次",
@@ -92,6 +94,8 @@ const ui = {
     noteHeading: "Tiny Disclaimer",
     noteText:
       "This is your current worksona, not your eternal soul. Sleep better, get a bonus, switch bosses, and the result might mutate.",
+    qrHeading: "Official Link",
+    qrText: "Scan the code or open https://fun.tujipath.com/",
     retryTop: "Retake",
     backTop: "Home",
     retry: "Try Again",
@@ -1101,6 +1105,8 @@ const els = {
   radarHeading: document.querySelector("#radar-heading"),
   noteHeading: document.querySelector("#note-heading"),
   noteText: document.querySelector("#note-text"),
+  qrHeading: document.querySelector("#qr-heading"),
+  qrText: document.querySelector("#qr-text"),
   resultDescription: document.querySelector("#result-description"),
   coworkerView: document.querySelector("#coworker-view"),
   resultTags: document.querySelector("#result-tags"),
@@ -1172,6 +1178,8 @@ function renderStaticUi() {
   els.radarHeading.textContent = data.radarHeading;
   els.noteHeading.textContent = data.noteHeading;
   els.noteText.textContent = data.noteText;
+  els.qrHeading.textContent = data.qrHeading;
+  els.qrText.textContent = data.qrText;
   els.langZh.classList.toggle("active", state.lang === "zh");
   els.langEn.classList.toggle("active", state.lang === "en");
 
