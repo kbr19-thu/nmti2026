@@ -770,7 +770,7 @@ button {
 
   .result-hero {
     min-height: 222px;
-    padding-bottom: 28px;
+    padding-bottom: 0;
   }
 
   .result-emblem {
@@ -782,15 +782,15 @@ button {
   }
 
   .result-qr-float {
-    width: 38px;
+    width: 28px;
     left: auto;
-    right: 8px;
-    bottom: -8px;
-    padding: 3px;
-    border-radius: 10px;
+    right: 18px;
+    bottom: 18px;
+    padding: 2px;
+    border-radius: 8px;
     transform: rotate(0deg);
-    box-shadow: 0 8px 14px rgba(29, 22, 15, 0.06);
-    opacity: 0.9;
+    box-shadow: 0 6px 10px rgba(29, 22, 15, 0.05);
+    opacity: 0.82;
   }
 
   .result-qr-caption {
