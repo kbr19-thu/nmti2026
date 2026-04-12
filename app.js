@@ -55,7 +55,6 @@ const ui = {
     resultKicker: "你的 NMTI 类型",
     descriptionHeading: "一句话解读",
     coworkerHeading: "同事视角",
-    screenHeading: "影视气质参考",
     radarHeading: "你的工位雷达",
     matchRate: (value) => `匹配度 ${value}%`,
     noteHeading: "友情提示",
@@ -127,7 +126,6 @@ const ui = {
     resultKicker: "Your WTFI Type",
     descriptionHeading: "One-Line Read",
     coworkerHeading: "Coworker POV",
-    screenHeading: "Screen Energy",
     radarHeading: "Your Office Radar",
     matchRate: (value) => `${value}% match`,
     noteHeading: "Tiny Disclaimer",
@@ -719,10 +717,6 @@ const archetypes = [
     slogan: { zh: "只要你在场，空气里都会自动长出 agenda。", en: "The moment you arrive, the room quietly grows an agenda." },
     stamp: { zh: "控场系高发类型", en: "High-control specimen" },
     summary: { zh: "你走到哪都像在开项目例会，混乱在你面前会自动排队。", en: "Every room starts behaving like a project sync when you enter. Chaos lines up for inspection." },
-    screenVibe: {
-      zh: "像群像职场戏里那个一句话让全场安静、镜头一切过来大家就开始坐直的人。",
-      en: "Like the ensemble-office character who quiets a room with one sentence and instantly changes the posture of everyone in frame.",
-    },
     description: { zh: "你不是单纯爱指挥，而是天然受不了低效。任务一乱、节奏一散、责任一糊，你就会想站出来把场子接住。", en: "You do not just like directing people. You physically reject inefficiency. Once the task blurs, the timing slips, or ownership gets muddy, you step in and seize the room." },
     coworkerView: { zh: "同事嘴上说你像 PM，心里知道有你在时，事情确实不容易散架。", en: "Coworkers joke that you are basically a PM in disguise, but they also know things fall apart less when you are around." },
     tags: { zh: ["控场上瘾", "收口达人", "会议终结者"], en: ["Control addict", "Closer", "Meeting finisher"] },
@@ -737,10 +731,6 @@ const archetypes = [
     slogan: { zh: "锅先别飞，你已经下意识伸手去接了。", en: "Before the blame even lands, you are already halfway to catching it." },
     stamp: { zh: "抗压系高发类型", en: "High-pressure specimen" },
     summary: { zh: "锅先接，场先稳，情绪晚点再说。你是团队的抗压外壳。", en: "You catch the blame, stabilize the scene, and postpone your emotions for later. You are the team's pressure armor." },
-    screenVibe: {
-      zh: "像灾难群像里每次局面要炸时都会被镜头切到的那个人，看着倒霉，但最后总是能把现场扛住。",
-      en: "Like the ensemble-disaster character the camera cuts to whenever things start collapsing: doomed on paper, strangely built to survive impact.",
-    },
     description: { zh: "你不一定最爱表现，但在真出问题的时候，你很难袖手旁观。你身上有一种“先别慌，我来顶一下”的气质。", en: "You may not chase attention, but when things genuinely start burning, you cannot stand aside. You carry a strong 'move, I will hold this' energy." },
     coworkerView: { zh: "大家会不自觉把难题往你这边靠，因为你真的很像能扛住。", en: "People unconsciously push hard problems in your direction because you genuinely look built for impact." },
     tags: { zh: ["关键时刻顶", "先救火再复盘", "抗压壳子"], en: ["Clutch under fire", "Firefighter first", "Pressure shell"] },
@@ -755,10 +745,6 @@ const archetypes = [
     slogan: { zh: "你不是在上班，你是在给工位配 BGM 和旁白。", en: "You are not just working. You are scoring the office with music and commentary." },
     stamp: { zh: "社交系高发类型", en: "High-social specimen" },
     summary: { zh: "你不仅在上班，也在给整个办公室提供情绪和戏剧张力。", en: "You do not simply work. You supply the office with tone, tension, and entertainment." },
-    screenVibe: {
-      zh: "像群像喜剧里那个走到哪都自带 BGM 和反应镜头的人，剧情不一定靠你推进，但热闹一定靠你维持。",
-      en: "Like the ensemble-comedy character who brings their own soundtrack and reaction shots into every scene; maybe not the plot driver, definitely the mood engine.",
-    },
     description: { zh: "你擅长把沉闷局面盘活，也擅长把一个普通吐槽讲成连续剧。你是团队里的扩音器，也是团建里的天然发动机。", en: "You can revive a dead room and turn a simple complaint into a whole season of television. You are both the amplifier and the engine of workplace social life." },
     coworkerView: { zh: "有你在，办公室不无聊；没有你，群聊会像失去 BGM。", en: "With you around, the office is alive. Without you, the group chat loses its soundtrack." },
     tags: { zh: ["情绪输出", "团建主舞台", "吐槽段子手"], en: ["Emotion broadcast", "Team-event magnet", "Complaint comedian"] },
@@ -773,10 +759,6 @@ const archetypes = [
     slogan: { zh: "平时像离线，交付时像突然从云里刷新出来。", en: "Most days you feel offline. Then deliverables materialize like a system update." },
     stamp: { zh: "静默系高发类型", en: "Quiet-mode specimen" },
     summary: { zh: "你看着安静，实际上在后台默默把很多关键零件补齐了。", en: "You seem quiet, but you are silently patching the machinery behind the scenes." },
-    screenVibe: {
-      zh: "像群像剧里前期台词不多、后期一出手就救场的隐藏角色，镜头不常给你，但每次给都很关键。",
-      en: "Like the low-dialogue ensemble character who barely registers early on, then quietly saves the situation when it matters most.",
-    },
     description: { zh: "你不抢存在感，也不爱空转社交，但你通常知道自己在干什么。别人注意不到你的时候，反而是你效率最高的时候。", en: "You do not chase visibility or pointless interaction, but you usually know exactly what you are doing. Your best work happens when nobody is paying attention." },
     coworkerView: { zh: "平时像消失，交付时像突然从云里掏出一个完整答案。", en: "You seem absent until a finished answer appears out of nowhere." },
     tags: { zh: ["静音高效", "拒绝空聊", "存在感后置"], en: ["Silent efficiency", "No filler talk", "Delayed presence"] },
@@ -791,10 +773,6 @@ const archetypes = [
     slogan: { zh: "别人还在吵，你已经在脑内画完流程图了。", en: "While others argue, you are already finishing the flowchart in your head." },
     stamp: { zh: "军师系高发类型", en: "Strategist specimen" },
     summary: { zh: "你不是最吵的那个，但通常是最先看懂局势的那个。", en: "You are rarely the loudest person in the room, but often the first to understand the board." },
-    screenVibe: {
-      zh: "像悬疑或群像戏里那个总能先看穿局势的人，台词不多，但一句就能把剧情拧正。",
-      en: "Like the ensemble strategist in a thriller who reads the room before everyone else and can realign the whole plot with one line.",
-    },
     description: { zh: "你对边界、逻辑和因果关系很敏感。别人还在吵时，你已经在想真正的问题在哪里，以及最稳的修法是什么。", en: "You are highly sensitive to scope, logic, and causality. While others are still reacting, you are already identifying the real problem and the cleanest fix." },
     coworkerView: { zh: "你说话不多，但一开口往往就是“这事真正卡的点在这儿”。", en: "You do not speak often, but when you do, it tends to sound like, 'Here is the actual bottleneck.'" },
     tags: { zh: ["逻辑自洽", "稳健保底", "风险扫描仪"], en: ["Logically sealed", "Safe by design", "Risk scanner"] },
@@ -809,10 +787,6 @@ const archetypes = [
     slogan: { zh: "你走到哪，哪里就开始像一个临时节目组。", en: "Wherever you go, the room starts behaving like a pop-up production crew." },
     stamp: { zh: "创意系高发类型", en: "Creative specimen" },
     summary: { zh: "你是那种会把办公室做成真人秀副本的人，热闹和点子都很多。", en: "You are the sort of person who turns an office into a reality show side quest. Loud ideas, lively energy." },
-    screenVibe: {
-      zh: "像青春群像或综艺感职场戏里那个总能把平淡一集搅出支线的人，危险又好看。",
-      en: "Like the ensemble wildcard who can turn a flat episode into a side-plot the moment they enter the frame: risky, chaotic, watchable.",
-    },
     description: { zh: "你喜欢流动、喜欢互相碰撞，也不怕把场面搞活。你的价值不只在执行，还在于给团队带来变化和动能。", en: "You enjoy motion, friction, and the spark that comes from collisions. Your value is not just execution. You inject momentum and change into the team." },
     coworkerView: { zh: "你可能偶尔分散注意力，但也常常顺手点燃了整个团队的气氛。", en: "You may occasionally derail focus, but you also ignite the room with alarming consistency." },
     tags: { zh: ["气氛带电", "创意乱入", "走到哪聊到哪"], en: ["Charged atmosphere", "Creative intrusion", "Portable side plot"] },
@@ -827,10 +801,6 @@ const archetypes = [
     slogan: { zh: "压力一来，你的战斗模式和黑眼圈会同时点亮。", en: "The pressure hits and both your battle mode and eye bags light up together." },
     stamp: { zh: "燃烧系高发类型", en: "Combustion specimen" },
     summary: { zh: "别人是被推动，你是会自己点火。压力一来，你反而更像进入战斗模式。", en: "Other people need a push. You self-ignite. The closer the pressure gets, the more combat-ready you become." },
-    screenVibe: {
-      zh: "像热血群像里那个越到最后关头越亮的角色，眼下挂着黑眼圈，镜头里却总是最能打。",
-      en: "Like the last-act burner in an ensemble drama: visibly exhausted, somehow most dangerous when the clock gets ugliest.",
-    },
     description: { zh: "你对任务有天然的推进欲，一旦进入状态，很容易不知不觉把自己烧过头。你厉害，也容易累。", en: "You have a natural urge to push tasks forward, and once activated, you tend to burn past reasonable limits. Effective, yes. Sustainable, questionable." },
     coworkerView: { zh: "大家一边心疼你太拼，一边庆幸关键节点有你这种人存在。", en: "People worry about how hard you push yourself, while secretly feeling lucky you exist at critical moments." },
     tags: { zh: ["自驱爆表", "压力增益", "高压推进器"], en: ["Self-propelled", "Pressure buff", "High-stress engine"] },
@@ -845,10 +815,6 @@ const archetypes = [
     slogan: { zh: "你未必永远在前线，但你永远精神上全仓。", en: "You may not always be on the front line, but spiritually you are all-in." },
     stamp: { zh: "代入系高发类型", en: "Attachment specimen" },
     summary: { zh: "你对团队有强烈参与感，虽然不一定时时冲前线，但一定时时在线上。", en: "You feel deeply invested in the team. Maybe not always at the front, but emotionally you are permanently online." },
-    screenVibe: {
-      zh: "像群像戏里那个明明不总站前排、却比主角还关心全局的人，戏份未必最多，情绪参与度一定拉满。",
-      en: "Like the ensemble character who is not always front-and-center but somehow cares more about the whole plot than the official leads.",
-    },
     description: { zh: "你最强的是整体感和代入感。这个事成了你真高兴，炸了你也真上火。你像团队的情绪持股人。", en: "Your strongest trait is identification with the whole. If the project wins, you glow. If it crashes, you feel it in your blood pressure. You are the emotional shareholder of the team." },
     coworkerView: { zh: "你未必永远在 C 位，但你对全局的关注度常常比当事人还高。", en: "You may not always be center stage, but your concern for the whole picture often exceeds that of the actual owners." },
     tags: { zh: ["全局入戏", "高度代入", "远程操心"], en: ["Fully invested", "Deeply attached", "Remote worrying"] },
@@ -1248,7 +1214,6 @@ const els = {
   resultStamp: document.querySelector("#result-stamp"),
   descriptionHeading: document.querySelector("#description-heading"),
   coworkerHeading: document.querySelector("#coworker-heading"),
-  screenHeading: document.querySelector("#screen-heading"),
   radarHeading: document.querySelector("#radar-heading"),
   noteHeading: document.querySelector("#note-heading"),
   noteText: document.querySelector("#note-text"),
@@ -1264,7 +1229,6 @@ const els = {
   plazaModalTags: document.querySelector("#plaza-modal-tags"),
   resultDescription: document.querySelector("#result-description"),
   coworkerView: document.querySelector("#coworker-view"),
-  screenVibe: document.querySelector("#screen-vibe"),
   resultTags: document.querySelector("#result-tags"),
   scoreList: document.querySelector("#score-list"),
   matchRate: document.querySelector("#match-rate"),
@@ -1340,7 +1304,6 @@ function renderStaticUi() {
   els.resultKicker.textContent = data.resultKicker;
   els.descriptionHeading.textContent = data.descriptionHeading;
   els.coworkerHeading.textContent = data.coworkerHeading;
-  els.screenHeading.textContent = data.screenHeading;
   els.radarHeading.textContent = data.radarHeading;
   els.noteHeading.textContent = data.noteHeading;
   els.noteText.textContent = data.noteText;
@@ -1712,7 +1675,6 @@ function renderResult() {
   document.documentElement.style.setProperty("--result-accent", result.accent);
   els.resultDescription.textContent = t(result.description);
   els.coworkerView.textContent = t(result.coworkerView);
-  els.screenVibe.textContent = t(result.screenVibe);
   els.matchRate.textContent = data.matchRate(result.match);
 
   els.resultTags.innerHTML = "";
